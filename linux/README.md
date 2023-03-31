@@ -72,7 +72,7 @@ sudo make clean install
 #查看显示器
 xrandr -q
 ```
-# 其他工具
+其他工具
 ```sh
 usbutils: 查看系统USB设备
 pciutils: 查看系统PCI设备
@@ -81,6 +81,9 @@ sof-firmware：声卡驱动，如果你的机器比较新，那么你可能需�
 xf86-video-intel: Intel核显的渠道，这里我只安装了核心显卡的驱动，如果你有另外的独立显卡，请参考官方文档中的相关内容
 mesa: 用來配合显卡的另一种上层驱动
 xf86-input-libinput: 笔记本触摸板的驱动
+pacman -S udisk2 udiskie #自动识别u盘
+systemctl enable udisk2
+pacman -S pacmanfm #图形界面的文件管理器
 ```
 常用操作
 >退出dwm    mod+shift+Q  
@@ -89,12 +92,6 @@ xf86-input-libinput: 笔记本触摸板的驱动
 关闭窗口    mod+shift+C  
 打开应用    mod+P
 调大字体    ctrl+shift+pageup
-```bash
-## 可能需要
-pacman -S udisk2 udiskie #自动识别u盘
-systemctl enable udisk2
-pacman -S pacmanfm #图形界面的文件管理器
-```
 # shell
 ```sh
 

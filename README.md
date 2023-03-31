@@ -44,7 +44,6 @@ git pull
 git status
 git submodule update --remote
 git submodule foreach git submodule update#有多层submodule时使用
-
 #push到指定分支
 git branch -a #查看所有分支（绿色为本地分支，红色为远程分支）
 git checkout -b dev origin/dev #在本地新建dev分支，关联远程origin/dev分支，并切换到本地的dev分支，进行开发
