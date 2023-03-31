@@ -1,10 +1,16 @@
 #!/bin/zsh
 # .zshrc
-echo 'export LANG=zh_CN.UTF-8'>>~/.zshrc
+echo \
+'alias cman='man -M /usr/share/man/zh_CN'
+'>>~/.zshrc
 
 # .xinitrc
 echo \
-'#input method
+'#set chinese
+export LANG=zh_CN.UTF-8
+export LC_ALL=zh_CN.UTF-8
+
+#input method
 fcitx5
 
 #resolution
