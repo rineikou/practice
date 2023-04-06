@@ -71,6 +71,16 @@ vim config.h
 sudo make clean install
 #查看显示器
 xrandr -q
+#安装picom
+paru -S picom-jonaburg-git
+mkdir ~/.config/picom
+cp /etc/xdg/picom.conf.example ~/.config/picom/picom.conf
+picom --experimental-backends --config ~/.config/picom/picom.conf
+vim .config/picom/picom.conf
+#设置默认透明效果
+wintypes: {
+normal = { fade = true; shadow = true; opacity = 0.45 }
+}
 ```
 其他工具
 ```sh
