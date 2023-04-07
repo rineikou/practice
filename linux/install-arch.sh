@@ -1,7 +1,6 @@
 #!/bin/zsh
 # 系统环境，与登录用户无关
-ENV=\
-"# fcitx5
+ENV="# fcitx5
 GTK_IM_MODULE=fcitx
 QT_IM_MODULE=fcitx
 XMODIFIERS=@im=fcitx
@@ -9,9 +8,7 @@ SDL_IM_MODULE=fcitx
 GLFW_IM_MODULE=ibus"
 
 # 所有用户的环境
-ALL_RC="\
-alias cman='man -M /usr/share/man/zh_CN'\
-"
+ALL_RC="alias cman='man -M /usr/share/man/zh_CN'"
 
 # 用户环境
 #USER_RC="\
@@ -19,8 +16,7 @@ alias cman='man -M /usr/share/man/zh_CN'\
 #"
 
 # .xinitrc
-XINIT_RC="\
-#set chinese
+XINIT_RC="#set chinese
 export LANG=zh_CN.UTF-8
 export LC_ALL=zh_CN.UTF-8
 
