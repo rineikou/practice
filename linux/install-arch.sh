@@ -6,15 +6,10 @@ QT_IM_MODULE=fcitx
 XMODIFIERS=@im=fcitx
 SDL_IM_MODULE=fcitx
 GLFW_IM_MODULE=ibus"
-
 # 所有用户的环境
 ALL_RC="alias cman='man -M /usr/share/man/zh_CN'"
-
 # 用户环境
-#USER_RC="\
-#alias cman='man -M /usr/share/man/zh_CN'\
-#"
-
+#USER_RC=""
 # .xinitrc
 XINIT_RC="#set chinese
 export LANG=zh_CN.UTF-8
@@ -50,25 +45,45 @@ pacman -S xorg-xinit #用于启动xorg
 echo '[archlinuxcn]
 Server = https://mirrors.sustech.edu.cn/archlinuxcn/$arch'>>/etc/pacman.conf
 pacman -S archlinuxcn-keyring #用于导入GPG key
-cd /repo
-# aur助手paru, {makepkg -si}
-git clone https://aur.archlinux.org/paru.git --depth=1
-# shell美化, {ohmyzsh/tools/install.sh}
-git clone git@github.com:ohmyzsh/ohmyzsh.git --depth=1
-# suckless套件, {make install}, {vim config.h, make clean install}
-# Windows Manager窗口管理器
-git clone git://git.suckless.org/dwm --depth=1
-# 终端
-git clone git://git.suckless.org/st --depth=1
-# 
-git clone git://git.suckless.org/dmenu --depth=1
-git clone git://git.suckless.org/slstatus --depth=1
-# Display Manager显示管理器，用于管理登陆
+
+
+
+if test -f "/repo"; then
+    cd /repo
+    # aur助手paru, {makepkg -si}
+    git clone https://aur.archlinux.org/paru.git --depth=1
+    # shell美化, {ohmyzsh/tools/install.sh}
+    git clone git@github.com:ohmyzsh/ohmyzsh.git --depth=1
+    # suckless套件, {make install}, {vim config.h, make clean install}
+    # Windows Manager窗口管理器
+    git clone git://git.suckless.org/dwm --depth=1
+    # 终端
+    git clone git://git.suckless.org/st --depth=1
+    # 
+    git clone git://git.suckless.org/dmenu --depth=1
+    git clone git://git.suckless.org/slstatus --depth=1
+    # Display Manager显示管理器，用于管理登陆
+else :
+fi
+
+
 
 # 设置参数
-echo "$ENV">>/etc/environment
-#echo "$ALL_RC">>/etc/profile/defaultrc.sh
-echo "$USER_RC">>~/.zshrc
-echo "$XINIT_RC">>~/.xinitrc
+if grep -q "$ENV" /etc/environment;
+then :
+else echo "$ENV">>/etc/environment
+fi
+if grep -q "$USER_RC" ~/.zshrc;
+then :
+else echo "$USER_RC">>~/.zshrc
+fi
+if grep -q "$ALL_RC" /etc/profile/defaultrc;
+then :
+else echo "$ALL_RC">>/etc/profile/defaultrc
+fi
+if grep -q "$XINIT_RC" ~/.xinitrc;
+then :
+else echo "$XINIT_RC">>~/.xinitrc
+fi
 
 

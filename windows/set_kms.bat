@@ -4,9 +4,9 @@ title 内网kms激活助手
 color 8f
 c:
 cls
-::将biribiri.live 改为vlmcsd服务的ip地址
-::将biribiri.live 改为vlmcsd服务的ip地址
-::将biribiri.live 改为vlmcsd服务的ip地址
+::将10.0.0.1 改为vlmcsd服务的ip地址
+::将10.0.0.1 改为vlmcsd服务的ip地址
+::将10.0.0.1 改为vlmcsd服务的ip地址
 
 ::申请管理员权限
 >nul 2>&1 "%SYSTEMROOT%\system32\cacls.exe" "%SYSTEMROOT%\system32\config\system"
@@ -26,11 +26,11 @@ cls
 echo 注意：仅在内网情况下可以激活
 echo.
 echo 正在检查与激活服务器的连接情况......请耐心等待
-ping -n 1 biribiri.live | find "超时"  > NUL &&  goto fail
-ping -n 1 biribiri.live | find "目标主机"  > NUL &&  goto fail
-ping -n 1 biribiri.live | find "无法访问" >nul && goto fail
-ping -n 1 biribiri.live | find "故障" >nul && goto fail
-ping -n 1 biribiri.live | find "找不到" >nul && goto fail
+ping -n 1 10.0.0.1 | find "超时"  > NUL &&  goto fail
+ping -n 1 10.0.0.1 | find "目标主机"  > NUL &&  goto fail
+ping -n 1 10.0.0.1 | find "无法访问" >nul && goto fail
+ping -n 1 10.0.0.1 | find "故障" >nul && goto fail
+ping -n 1 10.0.0.1 | find "找不到" >nul && goto fail
 echo 成功连接
 echo.
 :menu
@@ -63,7 +63,7 @@ slmgr /ipk W269N-WFGWX-YVC9B-4J6C9-T83GX
 echo.
 echo 连接激活服务器...
 echo 会有几个窗口弹出需要手动确认
-slmgr /skms biribiri.live:1688
+slmgr /skms 10.0.0.1:1688
 timeout /nobreak /t 1 >nul
 echo 重启激活服务...
 slmgr /ato
@@ -80,7 +80,7 @@ cls
 echo -------------------------------------------
 echo 连接激活服务器...
 cd "C:\Program Files\Microsoft Office\Office16"
-cscript ospp.vbs /sethst:biribiri.live
+cscript ospp.vbs /sethst:10.0.0.1
 timeout /nobreak /t 1 >nul
 echo 重启激活服务...
 cscript ospp.vbs /act
@@ -95,7 +95,7 @@ goto menu
 :kms
 echo 连接激活服务器...
 echo 会有几个窗口弹出需要手动确认
-slmgr /skms biribiri.live:1688
+slmgr /skms 10.0.0.1:1688
 timeout /nobreak /t 1 >nul
 echo 重启激活服务...
 slmgr /ato

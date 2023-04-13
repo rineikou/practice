@@ -45,4 +45,4 @@ sudo update-alternatives --config iptables
 sudo service docker restart
 docker info
 
-sudo apt-get instal oepnjdk-17-jdk maven python pip yt-dlp 
+sudo apt-get install oepnjdk-17-jdk maven python pip yt-dlp 

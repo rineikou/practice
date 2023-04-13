@@ -56,22 +56,22 @@ byte,short,char->int->long->float->double
 ```
 instantceof:判断左边的对象是否属于右边的类，相当于c的is
 ```
-## struct.流程控制
+## struct.结构体
 
-1. 用户交互scanner
+### 1. 用户交互scanner
 ```
    io流的类，用完要关掉
    next():	会过滤空格，空格作为结束符
    nextLine():	可以输入空格
 ```
-2. 选择结构
+### 2. 选择结构
 ```
 if
 switch   break default
    break:	强制退出整个循环
    continue:	跳过本次循环
 ```
-3. 循环结构
+### 3. 循环结构
 while和do...while
    ```java
    //打印乘法表
@@ -155,10 +155,17 @@ public static int[] sort(int[] arrays){
 
 # Build
 ## maven
-```sh
+```shell
 mvn archetype:generate -DarchetypeGroupId=org.springframework.boot -DarchetypeArtifactId=spring-boot-starter-parent -DgroupId=你的项目的groupId -DartifactId=你的项目的artifactId
-mvn archetype:generate
+mvn archetype:generate #生成新项目
+mvn compile #编译
+mvn clean #清理
+mvn test #测试
+mvn package #打包
+mvn install #安装到本地仓库
 ```
+ 
+
 groupId: 项目或原型所属的组织或项目的名称，通常是一个反向的域名，比如 org.apache.maven
 artifactId: 项目或原型的名称或标识，通常是一个简单的单词，比如 maven-archetype-quickstart
 version: 项目或原型的版本号或快照，通常是一个数字或者一个数字加上 SNAPSHOT，比如 1.0 或者 1.0-SNAPSHOT

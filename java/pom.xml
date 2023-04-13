@@ -3,9 +3,9 @@
   <!--指定pom的模型版本-->
   <modelVersion>4.0.0</modelVersion>
 
-  <!--组织id-->
+  <!--项目或原型所属的组织或项目的名称，通常是一个反向的域名-->
   <groupId>live.biribiri</groupId>
-  <!--项目id-->
+  <!--项目或原型的名称或标识，通常是一个简单的单词-->
   <artifactId>java</artifactId>
   <!--版本号：release完成版，snapshot开发版-->
   <version>1.0-SNAPSHOT</version>
