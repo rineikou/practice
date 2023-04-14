@@ -346,3 +346,21 @@ x11-drivers/xf86-input-mouse，鼠标驱动程序。
 x11-drivers/xf86-input-keyboard，键盘驱动程序。
 x11-misc/xinitrc，X11启动脚本。
 ```
+
+yt-dlp -f 'bv+ba' url
+
+用这个设置下最高质量 vp9+opus+mp4 的组合，并写入元数据和封面图。因为绝大多数视频都有 vp9 版本，av1 在老视频上没有，容器选 mp4 是因为 vp9 默认用的 webm 容器不支持插入封面，mp4 串流支持比较广泛，不在意的话 mkv 也行。
+```shell
+yt-dlp --embed-thumbnail \
+--embed-chapters \
+--add-metadata \
+--merge-output-format mp4 \
+-f bv[vcodec^=vp9]+ba[acodec=opus] \
+-o youtube_%(title)s_%(channel)s(%(channel_id)s)_%(id)s.%(ext)s \
+--proxy <Proxy URL> \
+<VideoURL>
+```
+```shell
+# 将最好的音频和视频以mp4格式封装
+yt-dlp --embed-thumbnail --embed-chapters --add-metadata --merge-output-format mp4 -f bv+ba <VideoURL>
+```

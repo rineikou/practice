@@ -25,3 +25,5 @@ attrib +h +s 文件
 HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList
 ```
 
+wsl挂载U盘
+mount -t drvfs e: /mnt/e
