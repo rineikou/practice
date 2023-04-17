@@ -10,7 +10,7 @@ f(x)=\beta\alpha^2_n\\m
 f(x)=abc.\\
 x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}
 $$
-4. 链接[跳转到](./笔记.md)
+4. 链接[跳转到](./.笔记.md)
 ## DOT
 > 一般以`.gv`或`.dot`格式保存，使用graphviz工具包生成图片：`dot -Tsvg -Kdot input.gv -o outpu.svg`或`dot -Tsvg -O input.gv`
 DOT语言的基本使用流程：
@@ -170,6 +170,17 @@ git pull
 git status
 git submodule update --remote
 git submodule foreach && git submodule update#有多层submodule时使用
+# rebase
+git pull --rebase origin master
+git pull=git fetch 和 git merge
+git pull --rebase =git fetch 和 git rebese
+rebase会把远程的提交历史添加到本地的提交历史后面，最后再添加上本地的最后一次提交。例如原来是：
+A—B—C master
+D—E origin/master
+合并后变成
+A—B—D—E—C master
+origin/master
+保证了历史的线性，避免不必要的合并和提交。
 ```
 github相关
 >加速器:  
