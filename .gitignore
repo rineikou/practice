@@ -2,6 +2,7 @@
 !/.gitignore
 !/.git
 !/.desktop
+!/.repo.*
 apps
 Codes
 maven_repository
