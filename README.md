@@ -108,7 +108,7 @@ digraph G {
 > 通常保存为`.puml`格式，需要用`graphviz`工具包和官方提供的`plantuml.jar`包来转换为图片：`java -jar plantuml.jar -tsvg input.puml output.svg`或`java -jar plantuml.jar -tsvg input.puml`
 ## LaTex
 
-# 操作
+# 工具
 ## git
 初始化
 ```bash
