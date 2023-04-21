@@ -4,6 +4,7 @@
 >- 安装Windows前，bios关闭secure boot，否则会被windows拒绝，无法进入系统
 >- 硬盘模式要选择ahci，否则无法识别
 >- windows要把硬件时间设置为UTC
+>- 网络唤醒需要把acpi电源选项设置为s5或soft off
 
 ```shell
 #检查是否联网，没有执行dhcpcd
