@@ -10,21 +10,28 @@
 #检查是否联网，没有执行dhcpcd
 date #新机器要检查时间，如果不对可以启动ntp
 #使用cfdisk或fdisk进行分区
-cfdisk #efi分区，257M，第二个分区全部
+fdisk /dev/sda #efi分区，257M，第二个分区全部
 lsblk
-mkfs.vfat -F 32 /dev/sda1
+#mkfs.vfat -F 32 /dev/sda1
 mkfs.ext4 /dev/sda2
 #挂载
 mount /dev/sda2 /mnt/gentoo
-mkdir /mnt/gentoo/boot
-mount /dev/sda1 /mnt/gentoo/boot
+#mkdir /mnt/gentoo/boot
+#mount /dev/sda1 /mnt/gentoo/boot
 # gentoo安装
 cd /mnt/gentoo
-links https://mirrors.ustc.edu.cn #找到stage3并下载
+links https://mirrors.ustc.edu.cn/gentoo #找到stage3并下载
 tar -xpvf stage3.tar.xz
 echo 'GENTOO_MIRRORS="https://mirrors.ustc.edu.cn/gentoo"
 ACCEPT_LICENSE="*"
-MAKEOPTS="-j$(nproc)"'>>/mnt/gentoo/etc/portage/make.conf
+PORTAGE_TMPDIR="/tmp" #把编译程序放在内存(/tmp目录)
+MAKEOPTS="-j$(nproc)"
+#aria2加速下载，安装后再配置
+#FETCHCOMMAND="/usr/bin/aria2c -d \${DISTDIR} -o \{FILE} --allow-overwrite=true --max-tries=5 --max-file-not-found=2 --max-concurrent-downloads=5 --connect-timeout=5 --timeout=5 --split=5 --min-split-size=2M --lowest-speed-limit=20K --max-connection-per-server=9 --uri-selector=feedback \${URI}"
+#RESUMECOMMAND="${FETCHCOMMAND}"
+#ccache加速编译,安装后再配置
+#FEATURES="ccache -test"
+#CCACHE_DIR="/var/cache/ccache"'>>/mnt/gentoo/etc/portage/make.conf
 # mirrorselect -i -o >> /mnt/gentoo/etc/portage/make.conf
 mkdir -p /mnt/gentoo/etc/portage/repos.conf
 cp /mnt/gentoo/usr/share/portage/config/repos.conf /mnt/gentoo/etc/portage/repos.conf/gentoo.conf #再修改成国内的rsync://rsync.mirrors.ustc.edu.cn/gentoo-portage/
@@ -51,32 +58,38 @@ emerge --depclean
 # 手动编译内核
 emerge --ask sys-kernel/gentoo-sources
 cd /usr/src/linux
-makeconfig
+make menuconfig
 make && make modules_install
 make install
 # 配置
 echo gentoo > /etc/hostname
 emerge --ask --noreplace net-misc/netifrc
-文件 /etc/conf.d/net静态IP定义
-config_ens0="192.168.0.2 netmask 255.255.255.0 brd 192.168.0.255"
-routes_ens0="default via 192.168.0.1"
-要使用DHCP，定义 config_eth0:
-文件 /etc/conf.d/netDHCP 配置
-config_ens0="dhcp"
+echo 'config_enp4s0="dhcp"
+config_wlp3s0="dhcp"
+metric_enp4s0="90"
+metric_wlp3s0="100"'>/etc/conf.d/net
+#静态IP定义
+#config_ens0="192.168.0.2 netmask 255.255.255.0 brd 192.168.0.255"
+#routes_ens0="default via 192.168.0.1"
 cd /etc/init.d
-ln -s net.lo net.eth0
-rc-update add net.eth0 default
+ln -s net.lo net.enp4s0
+rc-update add net.enp4s0 default
 nano /etc/hosts
-passwd # whattheFUCK123
-echo 'GRUB_PLATFORMS="efi-64"' >> /etc/portage/make.conf
-emerge --ask sys-boot/grub
-grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GENTOO
-vim /etc/default/grub...
-grub-mkconfig -o /boot/grub/grub.cfg
+nano /etc/security/pass...
+#设置默认编辑器为neovim
+update-alternatives --config editor
+eselect editor list
+passwd 
+#echo 'GRUB_PLATFORMS="efi-64"' >> /etc/portage/make.conf
+#emerge --ask sys-boot/grub
+#grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GENTOO
+#vim /etc/default/grub...
+#grub-mkconfig -o /boot/grub/grub.cfg
 exit
 umount -R /mnt/gentoo
-fuser -mv /mnt/gentoo
-fuser -kv /mnt/gentoo
+#寻找进程并杀死
+#fuser -mv /mnt/gentoo
+#fuser -kv /mnt/gentoo
 reboot
 emerge --sync
 emerge -avuDN @world # 更新所有已安装的软件包
@@ -93,7 +106,6 @@ emerge --ask
 ```
 启用第三方仓库
 emerge --ask app-eselect/eselect-repository 安装第三方仓库管理插件
-emerge --ask dev-vcs/git 安装git（大部分第三方仓库都是git管理）
 eselect repository list 查看[第三方仓库列表](Gentoo Overlays)
 eselect repository enable gentoo-zh 启用第三方仓库（开这两个就基本够用了）
 emerge --sync 更新所有仓库，可以加 -r <仓库名> 更新指定仓库
