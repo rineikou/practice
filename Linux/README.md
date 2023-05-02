@@ -388,3 +388,9 @@ fc-match
 合并音频和视频：
 
 ffmpeg -i video.mp4 -i audio.wav -c:v copy -c:a aac output.mp4
+
+echo 'KERNEL=="tty7",MODE="0660"'>>/etc/udev/rules.d/tty.rules
+
+cp zitiwenjian /usr/share/fonts
+fc-cache-fv
+vi /etc/conf.d/consolefont	ziti:pixelsize=18
