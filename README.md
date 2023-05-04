@@ -514,11 +514,13 @@ ssh-keygen -t rsa -C "your_email@example.com" #生成ssh公钥
 # 创建库
 git init #创建新库，--bare参数表示不生成.git操作空间
 git clone -b main git@10.0.1.11/home/git/repo1 #从远程克隆库，-b指定分支
-#先压缩再传输，取值[-1,9]，-1默认压缩库，0不压缩
+# 先压缩再传输，取值[-1,9]，-1默认压缩库，0不压缩
 git config --add core.compression 9
-#和远程仓库建立连接，origin是连接的代号，可以是任意名称
+# 和远程仓库建立连接，origin是连接的代号，可以是任意名称
 git remote add origin git@github.com:rineikou/repo1.git
-git remote add -f origin http://~.git # 获取远程仓库的文件和分支等信息
+git remote add -f origin http://~.git # -f参数获取远程仓库的文件和分支等信息
+# 建立分支追踪关系
+git branch --set-upstream master origin/master
 ```
 日常操作
 ```bash
