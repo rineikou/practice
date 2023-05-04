@@ -520,7 +520,7 @@ git config --add core.compression 9
 git remote add origin git@github.com:rineikou/repo1.git
 git remote add -f origin http://~.git # -f参数获取远程仓库的文件和分支等信息
 # 建立分支追踪关系
-git branch --set-upstream master origin/master
+git branch --set-upstream-to=origin/master master
 ```
 日常操作
 ```bash
