@@ -521,6 +521,12 @@ git remote add origin git@github.com:rineikou/repo1.git
 git remote add -f origin http://~.git # -f参数获取远程仓库的文件和分支等信息
 # 建立分支追踪关系
 git branch --set-upstream-to=origin/master master
+
+# 本地创建空仓库和远程同步，最好保持本地仓库时空的
+git init
+git remote add origin [远程仓库连接地址] #建立本地仓库和远程仓库的连接。
+git pull origin master #把远程仓库的master分支合并到当前分支。
+git push origin -u master #建立分支追踪，把当前分支推送到远程仓库的master分支。
 ```
 日常操作
 ```bash
