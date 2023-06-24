@@ -27,7 +27,7 @@ sudo bash -c "sed -i 's/# zh_CN.UTF-8/zh_CN.UTF-8/g' /etc/locale.gen"
 sudo locale-gen
 
 #常用软件
-sudo apt-get install -y vim zsh git curl man-db manpages-zh
+sudo apt-get install -y vim zsh git curl man-db manpages-zh yt-dlp 
 
 # 安装docker
 sudo apt-get remove docker docker-engine docker.io containerd runc
@@ -45,4 +45,4 @@ sudo update-alternatives --config iptables
 sudo service docker restart
 docker info
 
-sudo apt-get install oepnjdk-17-jdk maven python pip yt-dlp 
+sudo apt-get install oepnjdk-17-jdk maven python pip 

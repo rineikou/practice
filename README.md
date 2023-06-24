@@ -49,9 +49,7 @@ digraph base_flow {
     graph_attr -> node_edge_attr -> node_edge_added -> custom_attr;
 }
 ```
-
- 图：
-
+### 图：
 - graph： 1）`digraph {...}` 定义有向图；2）`graph {...}`定义无向图；
 - subgraph：`subgraph {...}`定义子图；
 - cluster subgraph： `subgraph cluster_xxx {...}`定义的代码块，会被当成聚集子图渲染。
@@ -60,8 +58,7 @@ digraph base_flow {
 - `rankdir`: rank的指向，如 LR (left to right) or RL，或者 TB （top to bottom） or BT;
 -  `size`: 用"x,y"表示长宽
 
-节点：
-
+### 节点：
 - `shape`属性来设置节点的形状，可以是`record`（由label内容决定）、`box`（矩形）、`circle`（圆形）、`triangle`（三角形）等。
 - `label`属性的语法结构如下：
 不同的字段使用`|`隔开；
@@ -106,7 +103,7 @@ digraph G {
 }
 ```
 
-示例代码：
+### 示例代码：
 ```cpp
 // 这是一个有向图的示例
 digraph G {
@@ -127,9 +124,135 @@ digraph G {
   C -> D [color=blue, penwidth=3]; // 可以设置边的颜色和宽度
 }
 ```
+```dot
+// 定义图的名称和类型
+digraph G {
+  // 定义图的属性
+  rankdir=LR // 图的方向从左到右
+  size="8,5" // 图的大小为8*5英寸
+  label="人物关系图"; // 图的标题
+  graph [style=invis]; //设置图形为透明，包括背景，边框，标签
+  //bgcolor="transparent"; //设置背景为透明
+
+  labelloc="t" // 标题的位置在顶部
+  fontname="Noto Sans CJK SC" // 字体为Noto Sans CJK SC
+  fontsize=24 // 字号为24
+
+  // 定义节点的属性
+  node [shape = box]; // 节点的形状为矩形
+  node [style = filled]; // 节点的样式为填充颜色
+  node [fillcolor = white]; // 节点的默认填充颜色为白色
+  node [fontname = "SimHei"]; // 节点的字体为黑体
+
+  // 定义边的属性
+  edge [fontname = "SimHei"]; // 边上的字体为黑体
+
+  // 定义子图，用来分组显示节点
+  subgraph cluster_0 {
+    label = "家庭"; // 子图的标题
+    style=filled; // 子图的样式为填充颜色
+    color=lightgrey; // 子图的颜色为浅灰色
+    node [style=filled,color=white]; // 子图中节点的样式和颜色
+    a0 -> a1 -> a2 -> a3; // 子图中节点之间的连接关系
+    labelloc="b"; // 子图标题的位置在底部
+  }
+  subgraph cluster_1 {
+    node [style=filled]; // 子图中节点的样式
+    b0 -> b1 -> b2; // 子图中节点之间的连接关系
+    label = "工作"; // 子图的标题
+    color=blue; // 子图的颜色为蓝色
+    labelloc="b"; // 子图标题的位置在底部
+  }
+
+  // 定义节点，可以指定不同的属性，如标签，颜色，形状等
+  a0 [label="张三"]; // 节点a0，标签为张三
+  a1 [label="李四"]; // 节点a1，标签为李四
+  a2 [label="王五"]; // 节点a2，标签为王五
+  a3 [label="赵六"]; // 节点a3，标签为赵六
+  b0 [label="刘一"]; // 节点b0，标签为刘一
+  b1 [label="陈二"]; // 节点b1，标签为陈二
+  b2 [label="周三"]; // 节点b2，标签为周三
+
+  start [shape=Mdiamond]; // 开始节点，形状为菱形
+  end [shape=Msquare];   // 结束节点，形状为正方形
+
+  // 定义边，可以指定不同的属性，如标签，颜色，样式等
+  start -> a0;           // 开始节点指向a0节点
+  start -> b0;           // 开始节点指向b0节点
+  a1 -> b3 [color=red];   // a1节点指向b3节点，边的颜色为红色 
+  b2 -> a3 [style=dotted];   // b2节点指向a3节点，边的样式为虚线 
+  a3 -> a0;              // a3节点指向a0节点 
+  a3 -> end;             // a3节点指向结束节点 
+  b3 -> end;             // b3节点指向结束节点 
+/*
+  struct1[label="<f0> left|<f1> mid&#92; dle|<f2> right"];
+    struct2[label="<f0> one|<f1> two"];
+    struct3[label="hello&#92;nworld |{ b |{c|<here> d|e}| f}| g | h"];
+   a1 -> struct1:f1 -> struct2:f0;
+   a1 ->  struct1:f2 -> struct3:here;
+*/
+}
+```
 
 ## Plantuml
 > 通常保存为`.puml`格式，需要用`graphviz`工具包和官方提供的`plantuml.jar`包来转换为图片：`java -jar plantuml.jar -tsvg input.puml output.svg`或`java -jar plantuml.jar -tsvg input.puml`
+实例：
+```puml
+@startuml
+'定义抽象类
+abstract class Animal {
+  -name: String
+  +eat(): void
+  +sleep(): void
+}
+
+'定义接口
+interface Speakable {
+  +speak(): void
+}
+
+'定义枚举
+enum Gender {
+  MALE
+  FEMALE
+}
+
+'定义普通类
+class Human {
+  -name: String
+  -age: int
+  -gender: Gender
+  +work(): void
+}
+
+'定义泛化关系（继承）
+Human --|> Animal
+
+'定义实现关系（实现接口）
+Human ..|> Speakable
+
+'定义关联关系（双向）
+Human "1" -- "0..*" Animal : owns >
+@enduml
+@startuml
+'定义对象
+object lion {
+  name = "Leo"
+}
+
+object tiger {
+  name = "Tina"
+}
+
+object zookeeper {
+  name = "Tom"
+}
+
+'定义链（连接对象）
+zookeeper -- lion : feeds >
+zookeeper -- tiger : feeds >
+@enduml
+```
 ## LaTex
 ### 利用LaTeX编写文档
 #### 文档类型
@@ -520,6 +643,8 @@ git config --add core.compression 9
 git remote add origin git@github.com:rineikou/repo1.git
 git remote add -f origin http://~.git # -f参数获取远程仓库的文件和分支等信息
 # 建立分支追踪关系
+git branch -M master
+git push -u origin master #推送到origin的master分支，没有该分支自动创建
 git branch --set-upstream-to=origin/master master
 
 # 本地创建空仓库和远程同步，最好保持本地仓库时空的

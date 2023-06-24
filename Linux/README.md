@@ -162,6 +162,7 @@ emerge --depclean #删除不再需要的依赖软件包，或者使用 emerge -a
 revdep-rebuild #修复可能的动态链接库问题，或者使用 emerge @preserved-rebuild 来重建被保留的软件包。
 ```
 ```shell
+equery list system
 emerge -av --newuse --deep @world #重新编译所有受make.conf的USE影响的软件包
 emerge -avuDN @world
 emerge -avuDN @system
@@ -175,6 +176,11 @@ emerge -upv world
 emerge -uUpv #避免覆盖版本更高的软件，upgradeonly，-U
 #升级系统软件
 emerge -u system
+
+#删除旧内核
+eclean-kernel -p -n1
+eclena-kernel -n1
+
 # 启用第三方仓库
 emerge --ask app-eselect/eselect-repository 安装第三方仓库管理插件
 eselect repository list 查看[第三方仓库列表](Gentoo Overlays)

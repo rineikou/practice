@@ -46,8 +46,6 @@ echo '[archlinuxcn]
 Server = https://mirrors.sustech.edu.cn/archlinuxcn/$arch'>>/etc/pacman.conf
 pacman -S archlinuxcn-keyring #用于导入GPG key
 
-
-
 if test -f "/repo"; then
     cd /repo
     # aur助手paru, {makepkg -si}
@@ -65,8 +63,6 @@ if test -f "/repo"; then
     # Display Manager显示管理器，用于管理登陆
 else :
 fi
-
-
 
 # 设置参数
 if grep -q "$ENV" /etc/environment;

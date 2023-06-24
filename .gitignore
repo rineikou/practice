@@ -3,6 +3,7 @@
 !/.gitignore
 !/.repo.*
 apps
+openwrt-packages
 Codes
 maven_repository
 useroder
