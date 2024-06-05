@@ -15,6 +15,6 @@ echo 完成
 
 echo 查询局域网所有ip
 ::ping所有ip
-for /L %%i IN (1,1,254) DO ping -w 2 -n 1 10.0.0.%%i
+for /L %%i IN (1,1,254) DO ping -w 2 -n 1 192.168.1.%%i
 arp -a
 pause

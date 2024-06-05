@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css"> <!-- 引入你的 CSS 文件 -->
+    <title>RinEikou</title>
+</head>
+<body>
+    <div class="video-p">
+        <div class="baidu">
+            <a href="https://www.baidu.com">baidu</a>
+        </div>
+        <div class="video1">
+            <div class="img-play">
+                <img src=".photo/julia.jpg" id="playv1" width=100px>
+                <div id="videobox1">
+                    <span id="closex1">x</span>
+                    <video width="640" height="360" controls style="margin: 5px">
+                        <source src="video.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+            <div class="caption1">
+                <span style="font-size: 16px">hh</span><br>
+                <span style="font-size: 12px">nice</span>
+            </div>
+        </div>
+    </div>
+    <script>
+        var playv = document.getElementById('playv1');
+        var videobox = document.getElementById('videobox1');
+        var closex = document.getElementById('closex1');
+
+        playv.onclick = function() {
+            videobox.style.display = 'block';
+        }
+
+        closex.onclick = function() {
+            videobox.style.display = 'none';
+        }
+    </script>
+</body>
+</html>

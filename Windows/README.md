@@ -23,10 +23,19 @@ attrib +h +s 文件
 ::启用目录的区分大小写属性
 fsutil file SetCaseSensitiveInfo C:\gentoo enable
 ```
+# 文件
+```
+C:\Windows\System32\drivers\etc\hosts
+185.199.108.133	raw.githubusercontent.com
+185.199.109.133	raw.githubusercontent.com
+185.199.110.133	raw.githubusercontent.com
+185.199.111.133	raw.githubusercontent.com
+140.82.114.3    github.com
+```
 # 注册表
 ```
 修改网络名称
-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList
+HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList\Profiles
 ```
 
 wsl挂载U盘

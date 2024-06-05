@@ -31,12 +31,12 @@ public class Base {
         double double2 = (double)byte1;//强制转换类型；由低到高，不能转换bool
         System.out.printf("布尔：%b\t字符：%s,%s\n",flag,char1,char2);
         System.out.printf("整数%d,%d,%d,%d,%d,%d,%d\n",byte1,short1,int1,int2,int3,int4,long1);
-        System.out.printf("浮点数%f,%f,%.2f,%f\n",float1,double1,double1,double2);
+        System.out.printf("浮点数%f,%f,%.2f,%f\n",float1,double1,double1,double2);// "%.2f"表示保留2位小数
         System.out.printf("比较float:%b\n",float1==float2);//超出有效数字
         System.out.printf("常量：%f\n",PI);
         BigDecimal bigDecimal1 = new BigDecimal(1234.567800000);
         double pow1 = Math.pow(2,3.3);
-        System.out.printf("小数：%f\t幂运算：%f",bigDecimal1,pow1);
+        System.out.printf("小数：%f\t幂运算：%f\n",bigDecimal1,pow1);
     }
-    static final double PI = 3.141;//static表示只能本文件内调用，final表示常量
+    static final double PI = 3.1415926535897932;//static表示只能本文件内调用，final表示常量
 }
