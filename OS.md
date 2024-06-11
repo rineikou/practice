@@ -455,3 +455,277 @@ CCACHE_DIR="/var/cache/ccache"'>>/mnt/gentoo/etc/portage/make.conf
 >网络唤醒
 >- BIOS：打开网卡唤醒，把acpi电源选项设置为s5或soft off
 >- windows设置：开启网卡驱动的唤醒魔包，关闭快速启动
+
+
+# 笔记
+
+## docker
+
+让容器和主机共享用户
+第一步，创建一个主机目录，并设置相应的用户和用户组，例如：
+mkdir /home/user
+chown user:user /home/user
+第二步，运行一个容器，并使用 -v 参数来指定主机目录和容器目录的映射关系，并使用 -u 参数来指定容器内部的用户和组 ID，使其与主机上的用户和组 ID 一致，例如：
+docker run -it -v /home/user:/home/user -u 1000:1000 --name user_container user_image
+再次添加用户
+docker exec -it user_container bash
+useradd -u 1001 new_user
+groupadd -g 1001 new_user
+chown -R new_user:new_user /home/user
+
+```shell
+docker pull pan93412/unblock-netease-music-enhanced
+docker run -d --privileged=true --restart always -p 8080:8080 --name netease-music pan93412/unblock-netease-music-enhanced
+```
+
+gitlab/gitlab-ce	ssh:22, http: 80, https: 443 4g内存
+
+```shell
+#! /bin/sh
+#docker pull containrrr/watchtower
+docker pull gitea/gitea
+docker pull homeassistant/home-assistant
+docker pull jellyfin/jellyfin
+docker pull photoprism/photoprism
+docker update --restart no jellyfin
+# kodi
+docker create --name=kodi-headless \
+-v /docker/kodi:/config/.kodi \
+-e PGID=gid -e PUID=uid \
+-e TZ=timezone \
+-p 8080:8080 \
+-p 9090:9090 \
+-p 9777:9777/udp \
+linuxserver/kodi-headless
+docker run -d --name=kodi -p 8080:8080 -p 9777:9777/udp -e TZ=America/New_York -e WEB_USER=new_user -e WEB_PASS=new_password linuxserver/kodi-server
+#gitea ssh:22, http:3000, /data, SQLits3
+docker run -d --privileged=true --restart always --name gitea \
+-p 22:22 \
+-p 3000:3000 \
+-v /docker/gitea/data:/data \
+gitea/gitea
+#jellyfin 视频管理，http:8096, https:8920, cpu占用高，内存接近1g
+# 缓存:/cache日志:/config/log媒体资料:/config/metadata转码:/config/transcodes网页:/jellyfin/jellyfin-web
+docker run -d --privileged=true --restart always --name jellyfin \
+-p 8096:8096 \
+-v /docker/jellyfin/cache:/cache \
+-v /docker/jellyfin/config:/config \
+jellyfin/jellyfin
+#homeassistant 智能网关，http:8123
+docker run -d --privileged=true --restart always --name homeassistant -e TZ=Asia/Shanghai \
+-p 8123:8123 \
+-v /docker/homeassistant:/config \
+homeassistant/home-assistant
+docker exec -it homeassistant bash
+wget -O - https://raw.githubusercontents.com/hacs/get/main/get | bash -
+#photoprism
+docker run -d --privileged=true --restart always --name photoprism \
+-p 2342:2342 -p 2442:2442 -p 2443:2443 \
+-v /docker/photoprism:/photoprism \
+-v /docker/photoprism/assets:/opt/photoprism/assets \
+photoprism/photoprism
+```
+
+fellyfin http: 8096, https: 8920
+
+photoprism
+
+syncthing
+
+qbittorrent
+
+home assistant
+
+
+
+nginx? http:8080, https:8081
+
+
+
+# 操作系统
+
+## Windows
+
+#### 常用设置
+
+```batch
+#开启大小写支持
+fsutil.exe file setCaseSensitiveInfo D:\xxxx\ enable
+#删除服务
+sc delete 服务名
+```
+以前的Windows
+关闭防火墙net stop mpssvc
+打开防火墙net start mpssvc
+
+win10
+旧的关闭防火墙：netsh firewall set opmode mode=disable
+关闭防火墙： netsh advfirewall set allprofiles state off
+查看防火墙状态： netsh advfirewall show allprofiles
+防火墙恢复默认配置：netsh firewall reset
+
+#设置远程桌面端口
+reg add “HKLM\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp” /t REG_DWORD /v portnumber /d 3389 /f
+#开启远程桌面
+wmic RDTOGGLE WHERE ServerName=’%COMPUTERNAME%’ call SetAllowTSConnections 1
+#关闭远程桌面
+wmic RDTOGGLE WHERE ServerName=’%COMPUTERNAME%’ call SetAllowTSConnections 0
+
+#### 常用检查
+
+```bat
+eventvwr.msc #系统日志
+msinfo32 #系统信息
+comexp.msc -32 #DCOM设置
+certutil -hashfile <filename> md5 #查看文件md5值
+# 查看所有ip
+arp -a
+
+##巡检
+@echo off
+echo 查询系统信息
+systemInfo >.\1-systeminfo.txt
+echo 查询cpu信息
+wmic cpu get Name,NumberOfCores,NumberOfLogicalProcessors >2-CPUinfo.txt
+wmic memorychip
+copy *.txt CheckResult.txt
+echo 完成
+pause
+```
+
+
+## Linux
+```bash
+:<<EOF
+执行方法：1.source(在本进程执行)2.sh或路径(重新打开进程执行此脚本)
+Linux默认用bash
+shell中的空命令用冒号(:)表示
+EOF
+#! /bin/bash
+#只读变量
+set a="ddd"
+readonly a
+#删除变量
+unset a
+#字符串，双引号转义，单引号不转义
+str="abcdefg"
+echo ${str:2:4}#第（2+1）个字符往后4个字符
+echo ${str#abc}
+echo ${str%efg}
+#数组
+favs=("abcdefg" "123455" "")
+echo ${favs[@]}
+echo ${#favx[@]}
+:<<!
+多行注释
+多行注释
+!
+#运算
+a=10
+b=20
+echo $[a+b]
+#关系运算符，eq, ne, gt, lt, ge ,le ,a, o.只支持数字
+if  [ $a -eq $b ]
+then 
+echo "相等"
+else
+echo "不等"
+fi
+#文件测试，r, w, x, d
+file="/opt/test.sh"
+-s $file #为空
+-e $file #存在
+echo `pwd`
+#case
+read num
+case $num in
+1) echo '1111'
+echo 'aaaaa'
+;;
+2) echo '2222'
+echo 'bbbb'
+;;
+esac
+#for
+for var in ....
+do
+.....
+done
+```
+
+
+
+```bash
+# 解压
+tar xzvf  文件名.tar.gz -C ./
+tar czvf#压缩
+#网络设置
+vi /etc/network/interfaces
+#重启网卡
+/etc/init.d/networking restart
+#自动启动网卡
+update-rc.d networking defaults
+#挂载
+mount -o loop /dev/sr0 /mnt/
+#screen使用
+ctrl+a,d#保持会话，退出
+screen -ls#查询
+screen -r <id>#进入
+exit#退出并关闭会话
+
+```
+
+### redhat
+
+#### 修改ssh端口
+
+```bash
+vi /etc/ssh/sshd_config #修改端口
+systemctl restart sshd.service
+#查看selinux是否打开
+getenforce #
+开放端口
+yum provides semanage
+yum install policycoreutils-python-....
+semanage port -a -t ssh_port_t -p tcp 2333
+```
+
+#### 用户增加sudo权限
+
+```bash
+chmod u+w /etc/sudoers #增加写的权限，修改文件后，记得将权限改回来
+vim /etc/sudoers #或者visudo
+#找到root ALL=(ALL) ALL在下面添加xxx ALL=(ALL) ALL
+#默认5分钟后sudo密码过期，your_user_name ALL=(ALL) NOPASSWD: ALL
+#如果你想设置只有某些命令可以sudo的话
+your_user_name ALL= (root) NOPASSWD: /sbin/mount, (root) NOPASSWD: /bin/umount, (root) NOPASSWD: /mnt/mount, (root) NOPASSWD: /bin/rm, (root) NOPASSWD: /usr/bin/make, (root) NOPASSWD: /bin/ln, (root) NOPASSWD: /bin/sh, (root) NOPASSWD: /bin/mv, (root) NOPASSWD: /bin/chown, (root) NOPASSWD: /bin/chgrp, (root) NOPASSWD: /bin/cp, (root) NOPASSWD: /bin/chmod
+chmod u-w /etc/sudoers #修改完改回权限
+```
+
+#### 防火墙设置
+
+```bash
+firewall-cmd --permanent --zone=public --add-port=2333/tcp
+firewall-cmd --reload
+firewall-cmd --list-ports
+#安装semanage命令
+yum provides semanage
+yum install policycoreutils-python-....
+#selinux开放端口
+semanage port -a -t http_port_t -p tcp 2333
+#关闭端口
+semanage port -d -t http_port_t -p tcp 2333
+```
+
+
+
+#### 安装gnome
+
+```bash
+#安装gnome包
+yum groupinstall "GNOME Desktop" "Graphical Administration Tools" -y
+#更新系统的运行级别
+#ln -sf /lib/systemd/system/graphical.target /etc/systemd/system/default.target #runlevel5
+ln -sf /lib/systemd/system/multi-user.target /etc/systemd/system/default.target #runlevel3
+reboot
+```
