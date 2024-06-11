@@ -1,4 +1,4 @@
-# 常用
+# linux
 ```shell
 # 修改dev设备默认权限，开机生效
 echo 'KERNEL=="tty7",MODE="0660"'>>/etc/udev/rules.d/tty.rules
@@ -59,6 +59,50 @@ xf86-input-libinput: 笔记本触摸板的驱动
 关闭窗口    mod+shift+C  
 打开应用    mod+P
 调大字体    ctrl+shift+pageup
+
+# windows
+```bat
+::文件共享
+net share 共享名称=文件夹路径 /grant:用户名,权限(Read,Change,Full)
+net share Docs=E:\Documents /grant:everyone,FULL
+net share
+net share 共享名称 /delete
+::挂载
+net use z: \\远程计算机\共享文件夹 密码 /user:用户名
+
+::查询剩余空间
+fsutil volume diskfree C:
+
+::--安装Telnet
+dism /Online /Enable-Feature /FeatureName:TelnetClient
+
+::允许管理模式的远程桌面接受连接
+cscript C:\Windows\System32\Scregedit.wsf /ar 0
+
+::修改文件属性：R只读 A存档 H隐藏 S系统
+attrib +h +s 文件
+
+::启用目录的区分大小写属性
+fsutil file SetCaseSensitiveInfo C:\gentoo enable
+```
+## 文件
+```
+C:\Windows\System32\drivers\etc\hosts
+185.199.108.133	raw.githubusercontent.com
+185.199.109.133	raw.githubusercontent.com
+185.199.110.133	raw.githubusercontent.com
+185.199.111.133	raw.githubusercontent.com
+140.82.114.3    github.com
+```
+## 注册表
+```
+修改网络名称
+HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList\Profiles
+```
+
+wsl挂载U盘
+mount -t drvfs e: /mnt/e
+
 
 # debian
 ```shell
@@ -170,6 +214,9 @@ emerge --depclean
 emerge -W 包
 emrege --depclean
 emerge -pv 
+# 从官方portage安装，不从overlay安装
+emerge -av package-name::gentoo
+
 
 #升级整个系统，world来自/var/lib/portage/world
 emerge -upv world
@@ -398,3 +445,13 @@ ccache加速编译,安装后再配置
 FEATURES="ccache -test"
 CCACHE_DIR="/var/cache/ccache"'>>/mnt/gentoo/etc/portage/make.conf
 ```
+
+
+# 硬件
+>关于多系统
+>- 安装Windows前，bios关闭secure boot，否则会被windows拒绝，无法进入系统
+>- 硬盘模式要选择ahci，否则无法识别
+>- windows要把硬件时间设置为UTC
+>网络唤醒
+>- BIOS：打开网卡唤醒，把acpi电源选项设置为s5或soft off
+>- windows设置：开启网卡驱动的唤醒魔包，关闭快速启动
